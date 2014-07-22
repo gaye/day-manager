@@ -47,10 +47,24 @@ function intersection(/*array1, array2, ..., arrayN*/) {
   // TODO
 }
 
+var buffer = {}, batchId;
 function reload(days) {
   days.forEach(function(day) {
+    buffer[day] = true;
+  });
+
+  if (typeof batchId !== 'number') {
+    batchId = setTimeout(batchUpdate, 100);
+  }
+}
+
+function batchUpdate() {
+  Object.keys(buffer).forEach(function(day) {
     dayManager.emit('reload', cache.get(day));
   });
+
+  buffer = {};
+  batchId = null;
 }
 
 module.exports = dayManager;
