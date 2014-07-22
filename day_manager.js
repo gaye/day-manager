@@ -14,7 +14,7 @@ Object.defineProperty(dayManager, 'store', {
 });
 
 dayManager.on('newListener', function(event) {
-  if (!(cache.contains(event))) {
+  if (!cache.contains(event)) {
     store.get('busytimes', event).then(function(busytimes) {
       busytimes.forEach(add);
     });
